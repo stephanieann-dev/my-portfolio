@@ -1,0 +1,12 @@
+document.documentElement.classList.add('js-ready');
+const header=document.querySelector('.header');
+const menu=document.querySelector('#menu');
+const nav=document.querySelector('.navbar');
+window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>30));
+menu?.addEventListener('click',()=>nav.classList.toggle('open'));
+document.querySelectorAll('.navbar a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const sections=[...document.querySelectorAll('main section[id]')];
+const links=[...document.querySelectorAll('.navbar a')];
+window.addEventListener('scroll',()=>{let current='home';sections.forEach(s=>{if(scrollY>=s.offsetTop-180)current=s.id});links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current))});
